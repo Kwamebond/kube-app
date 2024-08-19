@@ -4,7 +4,7 @@ metadata:
   name: vpromq01
 spec:
   ports:
-    - ports: 15672
+    - port: 15672
       targetPort: vpromq01-port
       protocol: TCP
   selector:
