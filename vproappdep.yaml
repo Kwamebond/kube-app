@@ -10,7 +10,7 @@ spec:
     matchLabels:
       app: vproapp
   template:
-    matadata:
+    metadata:
       labels:
         app: vproapp
     spec:
