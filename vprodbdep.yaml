@@ -14,6 +14,10 @@ spec:
       labels:
         app: vprodb
     spec:
+      volumes:
+        - name: vpro-db-data
+          persistentVolumeClaim:
+            claimName: db-pv-claim
       containers:
         - name: vprodb
           image: kwamebond/vprofiledb:latest
@@ -29,7 +33,6 @@ spec:
                 secretKeyRef:
                   name: app-secret
                   key: db-pass
-
           readinessProbe:
             tcpSocket:
               port: 3306
@@ -37,7 +40,6 @@ spec:
             periodSeconds: 10
             timeoutSeconds: 3
             failureThreshold: 3
-
           livenessProbe:
             tcpSocket:
               port: 3306
@@ -45,16 +47,6 @@ spec:
             periodSeconds: 20
             timeoutSeconds: 3
             failureThreshold: 3
-
-      nodeSelector:
-        zone: us-east-2a
-
-      volumes:
-        - name: vpro-db-data
-          awsElasticBlockStore:
-            volumeID: vol-03af5025b5f78885e
-            fsType: ext4
-
       initContainers:
         - name: busybox
           image: busybox:latest
