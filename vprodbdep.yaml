@@ -29,8 +29,26 @@ spec:
                 secretKeyRef:
                   name: app-secret
                   key: db-pass
+
+          readinessProbe:
+            tcpSocket:
+              port: 3306
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 3
+
+          livenessProbe:
+            tcpSocket:
+              port: 3306
+            initialDelaySeconds: 60
+            periodSeconds: 20
+            timeoutSeconds: 3
+            failureThreshold: 3
+
       nodeSelector:
         zone: us-east-2a
+
       volumes:
         - name: vpro-db-data
           awsElasticBlockStore:

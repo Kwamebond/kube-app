@@ -20,3 +20,15 @@ spec:
           ports:
             - name: vpromc-port
               containerPort: 11211
+
+          readinessProbe:
+            tcpSocket:
+              port: 11211
+            initialDelaySeconds: 10
+            periodSeconds: 10
+
+          livenessProbe:
+            tcpSocket:
+              port: 11211
+            initialDelaySeconds: 30
+            periodSeconds: 20
